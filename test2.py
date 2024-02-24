@@ -14,13 +14,16 @@ map = ['☐ ','☐ ','☐ ','☐ ','☐ ','☐ ','☐ ','☐ ','☐ ','☐ ','�
 #stats Player----------------------------------------------------
 MaxHP = 100
 HP = 100
-ATK = 10
+ATK = 1000000000
 Maxmama = 100
 Mama = 100
 
 level = 1
 FULLEXP = 50
 EXP = 0
+
+List_item = ['Dack book','Sword of freedom','Gun','Money','Rock','Friendly armor']
+Nember_item = 0
 
 #Level up++---------------------------------------------------------
 ATKUP = 2
@@ -355,7 +358,8 @@ while play == True and Gameover == False:
               1.Attack
               2.Skills
               3.Check
-              4.Run''')
+              4.Item
+              5.Run''')
               ChoosePlayer = input('You choose: ')
               if ChoosePlayer == 1 or ChoosePlayer == '1':
                 AttackMonster = ATK - random.randint(0,5)
@@ -366,26 +370,76 @@ while play == True and Gameover == False:
                 print('''
               1.Heal -10 mama +10-15HP
               2.Water ball -50 mama 30ATK ''')
-                ChooseSkill = input('You choose')
+                ChooseSkill = input('You choose: ')
                 if ChooseSkill == 1 or ChooseSkill == '1':
-                  HealHP = 10 + random.randint(0,5)
-                  print('Heal','+' + str(HealHP),'Mama','-10')
                   if Mama < 10:
                     print('NO Mama')
-                  Mama -= 10
+                  else:
+                    HealHP = 10 + random.randint(0,5)
+                    HP += HealHP
+                    print('Heal','+' + str(HealHP),'Mama','-10')
+                    Mama -= 10
+
                 elif ChooseSkill == 2 or ChooseSkill == '2':
                   AttackMonster = 30
-                  print('Mama','-30')
-                  if Mama < 30:
-                    print('NO Mama')
-                  Mama -= 30
-                  print(Monstername,'attacked',str(AttackMonster),'HP')
-                  MonsterHP -= AttackMonster
-                  print(Monstername,'Level:',Monsterlevel,'HP:',str(MonsterHP) + '/' + str(MonsterMaxHP),'ATK:',str(MonsterATK))
+                  if ATK > 0:
+                    print('Mama','-30')
+                    if Mama < 30:
+                      print('NO Mama')
+                    else:
+                      Mama -= 30
+                      print(Monstername,'attacked',str(AttackMonster),'HP')
+                      MonsterHP -= AttackMonster
+                      print(Monstername,'Level:',Monsterlevel,'HP:',str(MonsterHP) + '/' + str(MonsterMaxHP),'ATK:',str(MonsterATK))
+
               elif ChoosePlayer == 3 or ChoosePlayer == '3':
                   print(MonsterCheck)
                   print('\n')
+
               elif ChoosePlayer == 4 or ChoosePlayer == '4':
+                  Nember_item = 0
+                  for i in List_item:
+                    Nember_item += 1
+                    print(str(Nember_item)+".",end=' ')
+                    print(i)
+                  Itme_Choose = int(input('You choose: '))
+                  Yes_Itme =List_item[Itme_Choose - 1]
+                  if Yes_Itme == 'Dack book':
+                    print('Dack book BY Dack. MAKE BY Dack. WRITE BY Dack. Why do you use it?')
+                  elif Yes_Itme == 'Sword of freedom':
+                    print('It kill you because freedom.')
+                    print('Sword of freedom : Goodbye my master.')
+                    HP = 0
+                  elif Yes_Itme == 'Money': 
+                    if Monstername == 'Sales leader':
+                      print('Thank you for buying.')
+                      print('You got Dack book.')
+                      List_item.append('Dack book')
+                      break
+                    else:
+                      print('Why do you use it?')
+                  elif Yes_Itme == 'Gun':
+                    if Monstername != 'Super power Rock!!!!!!!!!!':
+                      if ATK > 0:
+                        print('You kill ',end='')
+                        print(Monstername ,end=' ')
+                        print('BY gun.')
+                        MonsterHP = 0
+                      else:
+                        print('Now Why do you use it?')
+                    else:
+                      print('Why do you use it?')
+                  if Yes_Itme == 'Rock':
+                    print('Rock is Best weapon in the world.')
+                    if ATK > 0:
+                      MonsterHP -= 9999999999999999999999999999999999999999
+                      print(Monstername,'attacked',str(9999999999999999999999999999999999999999),'HP')
+                      print(Monstername,'Level:',Monsterlevel,'HP:',str(MonsterHP) + '/' + str(MonsterMaxHP),'ATK:',str(MonsterATK))
+                  if Yes_Itme == 'Friendly armor':
+                    print('You can not hurt anyone right now because you are too Friendly.')
+                    ATK = 0
+
+              elif ChoosePlayer == 5 or ChoosePlayer == '5':
                   print('You run form',Monstername)
                   GotoFight = False
                   endfor = True
@@ -424,3 +478,4 @@ while play == True and Gameover == False:
 
         if HP <= 0:
           break
+        
